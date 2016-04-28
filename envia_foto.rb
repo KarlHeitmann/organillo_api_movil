@@ -4,7 +4,7 @@ Shoes.app width: 400 do
   background rgb(240, 250, 208)
 
   #@uri = URI('http://localhost:3000/shippings_driver_photo.json')
-  @uri = URI('http://despachos.sitransdocs.cl/shippings_driver_photo.json')
+  @uri = URI('http://cins.resed.cl/shippings_driver_photo.json')
   puts @uri
 
   stack width: 200 do

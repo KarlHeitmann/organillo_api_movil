@@ -47,7 +47,7 @@ Shoes.app width: 400 do
     button "Enviar" do
       para @os.text, @gd.text
       #uri = URI('http://localhost:3000/dispatches.json')
-      uri = URI('http://despachos.sitransdocs.cl/dispatches.json')
+      uri = URI('http://cins.resed.cl/dispatches.json')
       params = {
         'dispatch[cliente_rut]' => @cliente.text, 'dispatch[proveedor_rut]' => @proveedor.text, 'dispatch[chofer_rut]' => @chofer.text,
         'dispatch[numero_orden_salida]' => @os.text,'dispatch[numero_guia_de_despacho]' => @gd.text,
