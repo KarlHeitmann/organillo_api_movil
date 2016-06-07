@@ -11,8 +11,8 @@ end
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
 
-  @uri = URI('http://localhost:3000/shippings_driver_comment.json')
-  #@uri = URI('http://cins.resed.cl/shippings_driver_comment.json')
+  #@uri = URI('http://localhost:3000/shippings_driver_comment.json')
+  @uri = URI('http://cins.resed.cl/shippings_driver_comment.json')
   puts @uri
   @lat = "0"
   @lng = "0"
@@ -50,12 +50,7 @@ Shoes.app width: 400 do
     end
   end
   stack width: 200 do
-    button "test" do
-      puts @lat
-      params = masajear("manzana.jpg")
-      #puts params
-    end
-    button "Enviar apple" do
+    button "Enviar comentario" do
       params = masajear("manzana.jpg")
       res = Net::HTTP.post_form(@uri, params)
       puts res.body
