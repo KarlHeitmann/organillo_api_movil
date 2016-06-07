@@ -31,12 +31,13 @@ Shoes.app width: 400 do
     flow do
       para "Rut Cliente"
       @cliente = edit_line
-      @cliente.text = "21222334K"
+      #@cliente.text = "21222334K"
+      @cliente.text = "61704000K"
     end
     flow do
       para "Rut Chofer"
       @chofer = edit_line
-      @chofer.text = "41222336K"
+      @chofer.text = "163889979"
     end
     flow do
       para "Rut Proveedor"
@@ -48,6 +49,7 @@ Shoes.app width: 400 do
       para @os.text, @gd.text
       #uri = URI('http://localhost:3000/dispatches.json')
       uri = URI('http://cins.resed.cl/dispatches.json')
+      puts uri
       params = {
         'dispatch[cliente_rut]' => @cliente.text, 'dispatch[proveedor_rut]' => @proveedor.text, 'dispatch[chofer_rut]' => @chofer.text,
         'dispatch[numero_orden_salida]' => @os.text,'dispatch[numero_guia_de_despacho]' => @gd.text,
