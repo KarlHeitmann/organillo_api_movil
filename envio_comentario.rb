@@ -8,14 +8,17 @@ def masajear(file)
   }
   return params
 end
+def set_gps(lat, lng)
+  @lat = lat
+  @lng = lng
+end
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
 
-  #@uri = URI('http://localhost:3000/shippings_driver_comment.json')
-  @uri = URI('http://cins.resed.cl/shippings_driver_comment.json')
+  @uri = URI('http://localhost:3000/shippings_driver_comment.json')
+  #@uri = URI('http://cins.resed.cl/shippings_driver_comment.json')
   puts @uri
-  @lat = "0"
-  @lng = "0"
+  set_gps("-33.079", "-71.605")
   @instante = "25/02/2016-09:47"
 
   stack width: 200 do
@@ -32,20 +35,26 @@ Shoes.app width: 400 do
     stack do
       flow do
         radio do
-          @lat = "1"
-          @lng = "2"
+          set_gps("-33.079", "-71.605")
           puts @lat, @lng, @instante
         end
         para "Posicion 1"
       end
       flow do
         radio do 
-          @lat="4"
-          @lng="5"
+          set_gps("-33.081", "-71.612")
           puts @lat, @lng, @instante
           masajear
         end
         para "Posicion 2"
+      end
+      flow do
+        radio do 
+          set_gps("-33.0805", "-71.611")
+          puts @lat, @lng, @instante
+          masajear
+        end
+        para "Posicion 3"
       end
     end
   end
