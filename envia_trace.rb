@@ -10,8 +10,8 @@ require 'net/http'
 
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
-  #@uri = URI('http://localhost:3000/shippings_driver_trace.json')
-  @uri = URI('http://cins.resed.cl/shippings_driver_trace.json')
+  @uri = URI('http://localhost:3000/shippings_driver_trace.json')
+  #@uri = URI('http://transporte.cins.resed.cl/shippings_driver_trace.json')
   puts @uri
 
   stack width: 200 do
@@ -22,6 +22,14 @@ Shoes.app width: 400 do
     end
   end
   stack width: 200 do
+    button "Enviar carga" do
+      params = {
+        'dispatch_id' => @dispatch_id.text, 'trace[lat]' => "-33.082", 'trace[lng]' => "-71.601",
+        'trace[instante]' => "25/02/2016-09:49", "trace[tipo]" => "C"
+      }
+      res = Net::HTTP.post_form(@uri, params)
+      alert res.body
+    end
     button "Enviar salida" do
       params = {
         'dispatch_id' => @dispatch_id.text, 'trace[lat]' => "-33.079", 'trace[lng]' => "-71.605",

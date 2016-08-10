@@ -14,8 +14,8 @@ end
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
 
-  @uri = URI('http://localhost:3000/shippings_driver_photo.json')
-  #@uri = URI('http://cins.resed.cl/shippings_driver_photo.json')
+  #@uri = URI('http://localhost:3000/shippings_driver_photo.json')
+  @uri = URI('http://cins.resed.cl/shippings_driver_photo.json')
   puts @uri
   set_gps("-33.079", "-71.605")
   @instante = "25/02/2016-09:47"
