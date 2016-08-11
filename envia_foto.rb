@@ -1,4 +1,7 @@
 require 'net/http'
+require 'yaml'
+
+CONFIG = 'config.yml'
 
 def masajear(file)
   params = {
@@ -13,9 +16,10 @@ def set_gps(lat, lng)
 end
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
+  @config_data = YAML.load_file(CONFIG)
+  @config_data = @config_data["Parametros web"]
 
-  #@uri = URI('http://localhost:3000/shippings_driver_photo.json')
-  @uri = URI('http://cins.resed.cl/shippings_driver_photo.json')
+  @uri = URI("#{@config_data["dominio"]}/shippings_driver_photo.json")
   puts @uri
   set_gps("-33.079", "-71.605")
   @instante = "25/02/2016-09:47"

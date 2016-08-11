@@ -1,4 +1,8 @@
 require 'net/http'
+require 'yaml'
+
+CONFIG = 'config.yml'
+
 
 LAT = -33.081
 LNG = -71.612
@@ -27,8 +31,10 @@ end
 
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
-  #@uri = URI('http://localhost:3000')
-  @uri = URI('http://cins.resed.cl')
+  @config_data = YAML.load_file(CONFIG)
+  @config_data = @config_data["Parametros web"]
+
+  @uri = URI("#{@config_data["dominio"]}")
   puts @uri
 
   stack width: 200 do

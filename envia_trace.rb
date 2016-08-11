@@ -1,4 +1,8 @@
 require 'net/http'
+require 'yaml'
+
+CONFIG = 'config.yml'
+
 
 #'{"trace": {"lat":"-58.17256227443719","lng":"-156.65548382095133", "dispatch_id": "1", "instante":"25/02/2016-09:47", "tipo":"S"  }}' http://localhost:3000/traces.json
 #'{"trace": {"lat":"-58.17256227443719","lng":"-156.65548382095133", "dispatch_id": "1", "instante":"21/02/2016-10:21", "tipo":"L"  }}' http://localhost:3000/traces.json
@@ -10,8 +14,10 @@ require 'net/http'
 
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
-  @uri = URI('http://localhost:3000/shippings_driver_trace.json')
-  #@uri = URI('http://transporte.cins.resed.cl/shippings_driver_trace.json')
+  @config_data = YAML.load_file(CONFIG)
+  @config_data = @config_data["Parametros web"]
+
+  @uri = URI("#{@config_data["dominio"]}/shippings_driver_trace.json")
   puts @uri
 
   stack width: 200 do
