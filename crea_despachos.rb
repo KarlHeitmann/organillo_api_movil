@@ -1,6 +1,12 @@
 require 'net/http'
+require 'yaml'
+
+CONFIG = 'config.yml'
+
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
+  @config_data = YAML.load_file(CONFIG)
+  @config_data = @config_data["Parametros web"]
   stack width: 200 do
     flow do
       para "Orden de Salida (orden de salida)" #Corresponde a nombre del contenedor
@@ -35,8 +41,8 @@ Shoes.app width: 400 do
     end
 
     button "Enviar" do
-      uri = URI('http://localhost:9292/dispatches.json')
-      #uri = URI('http://cins.resed.cl/dispatches.json')
+
+      uri = URI("#{@config_data["dominio"]}/dispatches.json")
       puts uri
 =begin
       params = {
@@ -51,6 +57,7 @@ Shoes.app width: 400 do
         'dispatch[numero_orden_salida]' => @os.text, 'dispatch[numero_guia_de_despacho]' => "VOID",
         'dispatch[patente]' => @patente.text,'dispatch[origen]' => @origen.text,'dispatch[destino]' => "VOID"
       }
+      puts params
 
       res = Net::HTTP.post_form(uri, params)
       alert res.body
