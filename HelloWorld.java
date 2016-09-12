@@ -22,6 +22,7 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.URLConnection;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
 
@@ -36,9 +37,13 @@ public class HelloWorld {
     String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
     String CRLF = "\r\n"; // Line separator required by multipart/form-data.
 
-    URLConnection connection = new URL(url).openConnection();
-    connection.setDoOutput(true);
-    connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+    try {
+      URLConnection connection = new URL(url).openConnection();
+      connection.setDoOutput(true);
+      connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=" + boundary);
+    } catch(MalformedURLException ex) {
+      System.exit(1);
+    }
 
     try (
       OutputStream output = connection.getOutputStream();
