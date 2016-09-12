@@ -16,14 +16,23 @@
  *
  ******************************************************************************/
 
+import java.io.File;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.net.URLConnection;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.nio.file.Files;
+
 public class HelloWorld {
 
   public static void main(String[] args) {
-    String url = "http://example.com/upload";
+    String url = "http://localhost:9292/videos";
     String charset = "UTF-8";
     String param = "value";
-    File textFile = new File("/path/to/file.txt");
-    File binaryFile = new File("/path/to/file.bin");
+    File textFile = new File("config.yml");
+    File binaryFile = new File("pies.mp4");
     String boundary = Long.toHexString(System.currentTimeMillis()); // Just generate some unique random value.
     String CRLF = "\r\n"; // Line separator required by multipart/form-data.
 
