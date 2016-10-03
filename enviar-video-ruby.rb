@@ -3,16 +3,33 @@
 
 
 require 'net/http/post/multipart'
+require 'awesome_print'
+require 'yaml'
 
-#url = URI.parse('http://localhost:9292/videos')
-url = URI.parse('http://pti2.sitransdocs.cl/videos')
-File.open("./pies.mp4") do |mp4| # ./pies.mp4 es la ruta al archivo que se va a subir
+CONFIG = 'config.yml'
+
+ap ARGV 
+
+video = ARGV[0]
+despacho = ARGV[1]
+
+@config_data = YAML.load_file(CONFIG)
+@config_data = @config_data["Parametros web"]
+
+url = URI("#{@config_data["dominio"]}/videos")
+
+
+
+File.open("./#{video}") do |mp4| # ./pies.mp4 es la ruta al archivo que se va a subir
   params = { # Este hash contiene el contenido del video y el despacho al cual va asociado el video
-    "video[data_raw]" => UploadIO.new(mp4, "video/mp4", "pies.mp4"), # crea el contenido del video
-    "video[dispatch_id]" => "1" #corresponde al ID del despacho al cual se asociara el video
+    "video[data_raw]" => UploadIO.new(mp4, "video/mp4", video), # crea el contenido del video
+    "video[dispatch_id]" => despacho, #corresponde al ID del despacho al cual se asociara el video
+    "video[comentario]" => "Lorem ipsum de video"
   }
+  ap params
   req = Net::HTTP::Post::Multipart.new(url.path, params)  #construye la peticion http
   res = Net::HTTP.start(url.host, url.port) do |http|
     http.request(req) # ejecuta la peticion http
   end
+  ap res
 end
