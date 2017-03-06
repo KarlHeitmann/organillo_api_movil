@@ -16,14 +16,14 @@ despacho = ARGV[1]
 @config_data = YAML.load_file(CONFIG)
 @config_data = @config_data["Parametros web"]
 
-url = URI("#{@config_data["dominio"]}/videos")
+url = URI("#{@config_data["dominio"]}/jobs/#{despacho}/videos")
 
 
 
 File.open("./#{video}") do |mp4| # ./pies.mp4 es la ruta al archivo que se va a subir
   params = { # Este hash contiene el contenido del video y el despacho al cual va asociado el video
-    "video[data_raw]" => UploadIO.new(mp4, "video/mp4", video), # crea el contenido del video
-    "video[dispatch_id]" => despacho, #corresponde al ID del despacho al cual se asociara el video
+    "video[video_uid]" => UploadIO.new(mp4, "video/mp4", video), # crea el contenido del video
+    "video[job_id]" => despacho, #corresponde al ID del despacho al cual se asociara el video
     "video[comentario]" => "Lorem ipsum de video"
   }
   ap params

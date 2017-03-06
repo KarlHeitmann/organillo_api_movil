@@ -5,8 +5,8 @@ CONFIG = 'config.yml'
 
 def masajear(file)
   params = {
-    'dispatch_id' => @dispatch_id.text, 'data_raw' => "data:image/jpeg;base64,#{`base64 --wrap=0 #{file}`}",
-    'comentario' => @comentario.text, 'lat' => @lat, 'lng' => @lng, 'instante' => @instante
+    'photo[image_uid]' => "data:image/jpeg;base64,#{`base64 --wrap=0 #{file}`}",
+    'photo[comentario]' => @comentario.text, 'photo[lat]' => @lat, 'photo[lng]' => @lng, 'photo[instante]' => @instante
   }
   return params
 end
@@ -19,8 +19,7 @@ Shoes.app width: 400 do
   @config_data = YAML.load_file(CONFIG)
   @config_data = @config_data["Parametros web"]
 
-  @uri = URI("#{@config_data["dominio"]}/shippings_driver_photo.json")
-  puts @uri
+  puts @config_data["dominio"]
   set_gps("-33.079", "-71.605")
   @instante = "25/02/2016-09:47"
 
@@ -69,24 +68,28 @@ Shoes.app width: 400 do
     end
     button "Enviar apple" do
       params = masajear("manzana.jpg")
+      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
       res = Net::HTTP.post_form(@uri, params)
       puts res.body
       alert "recibido"
     end
     button "Enviar banana" do
       params = masajear("banana.png")
+      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
       res = Net::HTTP.post_form(@uri, params)
       puts res.body
       alert "recibido"
     end
     button "Enviar orange" do
       params = masajear("orange.png")
+      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
       res = Net::HTTP.post_form(@uri, params)
       puts res.body
       alert "recibido"
     end
     button "Enviar lena" do
       params = masajear("lena.bmp")
+      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
       res = Net::HTTP.post_form(@uri, params)
       puts res.body
       alert "recibido"
