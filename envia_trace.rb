@@ -1,6 +1,8 @@
 require 'net/http'
 require 'yaml'
 
+require_relative 'rutas'
+
 CONFIG = 'config.yml'
 
 
@@ -13,11 +15,13 @@ CONFIG = 'config.yml'
 #'{"trace": {"lat":"-33.0805","lng":"-71.611", "instante":"05/01/2016-11:07"}, "dispatch_id": '"$2"'}' localhost:3000/shippings_driver_trace.json
 
 Shoes.app width: 400 do
+  puts "hola"
   background rgb(240, 250, 208)
   @config_data = YAML.load_file(CONFIG)
   @config_data = @config_data["Parametros web"]
+  puts "hola"
 
-  puts @uri
+  puts @config_data["dominio"]
 
   stack width: 200 do
     flow do
@@ -30,8 +34,8 @@ Shoes.app width: 400 do
     button "Enviar carga" do
       @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/traces.json")
       params = {
-        'trace[lat]' => "-33.082", 'trace[lng]' => "-71.601",
-        'trace[instante]' => "25/02/2016-09:49"
+        'trace[lat]' => RUTA_1[0][:lat], 'trace[lng]' => RUTA_1[0][:lon],
+        'trace[instante]' => "25/08/2017-09:49"
       }
       res = Net::HTTP.post_form(@uri, params)
       alert res.body
@@ -39,8 +43,8 @@ Shoes.app width: 400 do
     button "Enviar salida" do
       @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/traces.json")
       params = {
-        'trace[lat]' => "-33.079", 'trace[lng]' => "-71.605",
-        'trace[instante]' => "25/02/2016-09:47"
+        'trace[lat]' => RUTA_2[0][:lat], 'trace[lng]' => RUTA_2[0][:lon],
+        'trace[instante]' => "25/08/2017-10:47"
       }
       res = Net::HTTP.post_form(@uri, params)
       alert res.body
@@ -48,8 +52,8 @@ Shoes.app width: 400 do
     button "Enviar llegada" do
       @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/traces.json")
       params = {
-        'trace[lat]' => "-33.081", 'trace[lng]' => "-71.612",
-        'trace[instante]' => "21/02/2016-10:21"
+        'trace[lat]' => RUTA_3[0][:lat], 'trace[lng]' => RUTA_3[0][:lon],
+        'trace[instante]' => "25/08/2017-13:21"
       }
       res = Net::HTTP.post_form(@uri, params)
       alert res.body
@@ -57,8 +61,8 @@ Shoes.app width: 400 do
     button "Enviar descarga" do
       @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/traces.json")
       params = {
-        'trace[lat]' => "-33.0805", 'trace[lng]' => "-71.611",
-        'trace[instante]' => "05/01/2016-11:07"
+        'trace[lat]' => RUTA_4[0][:lat], 'trace[lng]' => RUTA_4[0][:lon],
+        'trace[instante]' => "25/08/2017-15:07"
       }
       res = Net::HTTP.post_form(@uri, params)
       alert res.body

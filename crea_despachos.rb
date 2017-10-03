@@ -3,73 +3,38 @@ require 'yaml'
 
 CONFIG = 'config.yml'
 
-=begin
-bleh = {"dispatch"=>{
-  "numero_orden_salida"=>"ASDF123456789",
- "numero_guia_de_despacho"=>"VOID",
- "patente"=>"FALLA DESPACHO",
- "origen"=>"ANTOFAGASTA",
- "destino"=>"VOID",
- "chofer_email"=>"rpti@sitrans.cl",
- "cliente_nombre"=>"WAN"
-}}
-=end
-
 Shoes.app width: 400 do
   background rgb(240, 250, 208)
   @config_data = YAML.load_file(CONFIG)
   @config_data = @config_data["Parametros web"]
+  puts @config_data["dominio"]
   stack width: 200 do
     flow do
-      para "Orden de Salida (orden de salida)" #Corresponde a nombre del contenedor
-      @os = edit_line
-      @os.text = "ASDF123456789"
+      para "Auxiliar 1" #Corresponde a nombre del contenedor
+      @aux1 = edit_line
+      @aux1.text = "ASDF123456789"
     end
     flow do
-      para "Patente (patente)"
-      @patente = edit_line
-      @patente.text = "FALLA DESPACHO"
-    end
-    flow do
-      para "Origen (deposito)"
-      @origen = edit_line
-      @origen.text = "ANTOFAGASTA"
+      para "Auxiliar 2"
+      @aux2 = edit_line
+      @aux2.text = "FALLA DESPACHO"
     end
   end
   stack width: 200 do
     flow do
-      para "Rut Cliente(propietario)"
-      @cliente = edit_line
-      @cliente.text = "WAN"
+      para "Usuario 1 rut"
+      @usuario1 = edit_line
+      @usuario1.text = "163889977"
     end
-    flow do
-      para "Rut Chofer"
-      @chofer = edit_line
-      @chofer.text = "rpti@sitrans.cl"
-    end
-    flow do
-      para "Rut Proveedor"
-      @proveedor = edit_line
-      @proveedor.text = "31222335K"
-    end
-
     button "Enviar" do
 
-      uri = URI("#{@config_data["dominio"]}/dispatches")
+      uri = URI("#{@config_data["dominio"]}/jobs.json")
       puts uri
-=begin
       params = {
-        'dispatch[cliente_rut]' => @cliente.text, 'dispatch[proveedor_rut]' => @proveedor.text, 'dispatch[chofer_rut]' => @chofer.text,
-        'dispatch[numero_orden_salida]' => @os.text,'dispatch[numero_guia_de_despacho]' => @gd.text,
-        'dispatch[patente]' => @patente.text,'dispatch[origen]' => @origen.text,'dispatch[destino]' => @destino.text,
-        'dispatch[codigo_contenedor]' => @cc.text
+        'job[usuario1_rut]' => @usuario1.text,
+        'job[aux1]' => @aux1.text, 'job[aux2]' => @aux2.text
       }
-=end
-      params = {
-        'dispatch[cliente_nombre]' => @cliente.text, 'dispatch[chofer_email]' => @chofer.text,
-        'dispatch[numero_orden_salida]' => @os.text, 'dispatch[numero_guia_de_despacho]' => "VOID",
-        'dispatch[patente]' => @patente.text,'dispatch[origen]' => @origen.text,'dispatch[destino]' => "VOID"
-      }
+      puts params
 
       res = Net::HTTP.post_form(uri, params)
       alert res.body
