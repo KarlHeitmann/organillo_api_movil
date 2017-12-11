@@ -1,7 +1,7 @@
 ---
 Parametros web:
-  dominio: http://localhost:3000
-  #dominio: http://avambo.resed3.webfactional.com
+  #dominio: http://localhost:3000
+  dominio: http://avambo.resed3.webfactional.com
   #dominio: http://demiyo.resed3.webfactional.com
   #dominio: http://cins2.resed.cl
   #dominio: http://pti2.sitransdocs.cl
