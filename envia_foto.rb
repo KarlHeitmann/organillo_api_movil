@@ -14,85 +14,88 @@ def set_gps(lat, lng)
   @lat = lat
   @lng = lng
 end
-Shoes.app width: 400 do
-  background rgb(240, 250, 208)
-  @config_data = YAML.load_file(CONFIG)
-  @config_data = @config_data["Parametros web"]
 
-  puts @config_data["dominio"]
-  set_gps("-33.079", "-71.605")
-  @instante = "25/02/2016-09:47"
+def envia_foto
+  Shoes.app width: 400 do
+    background rgb(240, 250, 208)
+    @config_data = YAML.load_file(CONFIG)
+    @config_data = @config_data["Parametros web"]
 
-  stack width: 200 do
-    flow do 
-      para "Dispatch ID"
-      @dispatch_id = edit_line
-      @dispatch_id.text = "1"
-    end
-    flow do 
-      para "Comentario"
-      @comentario = edit_line
-      @comentario.text = "Lorem ipsum"
-    end
-    stack do
-      flow do
-        radio do
-          set_gps("-33.079", "-71.605")
-          puts @lat, @lng, @instante
-        end
-        para "Posicion 1"
+    puts @config_data["dominio"]
+    set_gps("-33.079", "-71.605")
+    @instante = "25/02/2016-09:47"
+
+    stack width: 200 do
+      flow do 
+        para "Dispatch ID"
+        @dispatch_id = edit_line
+        @dispatch_id.text = "1"
       end
-      flow do
-        radio do 
-          set_gps("-33.081", "-71.612")
-          puts @lat, @lng, @instante
-          masajear
-        end
-        para "Posicion 2"
+      flow do 
+        para "Comentario"
+        @comentario = edit_line
+        @comentario.text = "Lorem ipsum"
       end
-      flow do
-        radio do 
-          set_gps("-33.0805", "-71.611")
-          puts @lat, @lng, @instante
-          masajear
+      stack do
+        flow do
+          radio do
+            set_gps("-33.079", "-71.605")
+            puts @lat, @lng, @instante
+          end
+          para "Posicion 1"
         end
-        para "Posicion 3"
+        flow do
+          radio do 
+            set_gps("-33.081", "-71.612")
+            puts @lat, @lng, @instante
+            masajear
+          end
+          para "Posicion 2"
+        end
+        flow do
+          radio do 
+            set_gps("-33.0805", "-71.611")
+            puts @lat, @lng, @instante
+            masajear
+          end
+          para "Posicion 3"
+        end
       end
     end
-  end
-  stack width: 200 do
-    button "test" do
-      puts @lat
-      params = masajear("manzana.jpg")
-      #puts params
-    end
-    button "Enviar apple" do
-      params = masajear("manzana.jpg")
-      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
-      res = Net::HTTP.post_form(@uri, params)
-      puts res.body
-      alert "recibido"
-    end
-    button "Enviar banana" do
-      params = masajear("banana.png")
-      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
-      res = Net::HTTP.post_form(@uri, params)
-      puts res.body
-      alert "recibido"
-    end
-    button "Enviar orange" do
-      params = masajear("orange.png")
-      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
-      res = Net::HTTP.post_form(@uri, params)
-      puts res.body
-      alert "recibido"
-    end
-    button "Enviar lena" do
-      params = masajear("lena.bmp")
-      @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
-      res = Net::HTTP.post_form(@uri, params)
-      puts res.body
-      alert "recibido"
+    stack width: 200 do
+      button "test" do
+        puts @lat
+        params = masajear("manzana.jpg")
+        #puts params
+      end
+      button "Enviar apple" do
+        params = masajear("manzana.jpg")
+        @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
+        res = Net::HTTP.post_form(@uri, params)
+        puts res.body
+        alert "recibido"
+      end
+      button "Enviar banana" do
+        params = masajear("banana.png")
+        @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
+        res = Net::HTTP.post_form(@uri, params)
+        puts res.body
+        alert "recibido"
+      end
+      button "Enviar orange" do
+        params = masajear("orange.png")
+        @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
+        res = Net::HTTP.post_form(@uri, params)
+        puts res.body
+        alert "recibido"
+      end
+      button "Enviar lena" do
+        params = masajear("lena.bmp")
+        @uri = URI("#{@config_data["dominio"]}/jobs/#{@dispatch_id.text}/photos")
+        res = Net::HTTP.post_form(@uri, params)
+        puts res.body
+        alert "recibido"
+      end
     end
   end
 end
