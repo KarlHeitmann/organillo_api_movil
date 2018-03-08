@@ -1,4 +1,5 @@
 require_relative 'envia_foto'
+require_relative 'envia_trace'
 #require_relative 'wapii_login'
 
 CONFIG = 'config.yml'
@@ -20,6 +21,9 @@ Shoes.app width: 400 do
   stack width: 200 do
     button "Fotos" do
       envia_foto
+    end
+    button "Traces" do
+      envia_trace
     end
   end
 end
